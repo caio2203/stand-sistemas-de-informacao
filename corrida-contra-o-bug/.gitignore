@@ -1,0 +1,8 @@
+node_modules/
+# gerado por `npm run preparar` a partir de ../compartilhado
+www/compartilhado/
+# saídas de build do Android
+android/app/build/
+android/build/
+android/.gradle/
+android/app/src/main/assets/public/

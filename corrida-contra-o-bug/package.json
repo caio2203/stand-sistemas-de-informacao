@@ -1,0 +1,26 @@
+{
+  "name": "corrida-contra-o-bug",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Jogo Corrida contra o Bug do stand de Sistemas de Informação do IFBA",
+  "type": "module",
+  "scripts": {
+    "preparar": "node ../scripts/sincronizar-compartilhado.mjs",
+    "servir": "npm run preparar && npx --yes serve www -l 8081",
+    "test": "node --test",
+    "android": "npm run preparar && npx cap sync android",
+    "abrir-android": "npx cap open android"
+  },
+  "dependencies": {
+    "@capacitor/android": "^7.0.0",
+    "@capacitor/core": "^7.0.0",
+    "@capacitor/filesystem": "^7.0.0",
+    "@capacitor/status-bar": "^7.0.0"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "^7.0.0"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

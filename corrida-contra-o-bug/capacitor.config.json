@@ -1,0 +1,10 @@
+{
+  "appId": "br.edu.ifba.si.corridabug",
+  "appName": "Corrida contra o Bug",
+  "webDir": "www",
+  "plugins": {
+    "StatusBar": {
+      "overlaysWebView": true
+    }
+  }
+}

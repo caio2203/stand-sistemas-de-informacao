@@ -1,0 +1,189 @@
+/* ==========================================================================
+   CORRIDA CONTRA O BUG: layout e componentes específicos.
+   Só tokens (compartilhado/tokens.css). Linguagem de tela de revisão de código.
+   ========================================================================== */
+
+/* Colunas de formulário e de resultado (início, fim, ranking) */
+.coluna {
+  display: flex;
+  flex-direction: column;
+  gap: var(--e-4);
+  width: 100%;
+  max-width: var(--largura-coluna);
+  margin: 0 auto;
+  padding-bottom: var(--e-8);
+}
+.campo input[type="text"] { max-width: var(--largura-lateral); }
+
+/* ---------- Jogo ---------- */
+.tela-jogo { gap: var(--e-3); }
+
+.cabecalho-partida {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--e-2) var(--e-6);
+  align-items: baseline;
+  flex: none;
+}
+.cabecalho-partida .tempo { margin-left: auto; }
+.aviso-tempo:empty { display: none; }
+
+.area-jogo {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--e-4);
+  align-items: start;
+}
+
+/* Editor: barra superior, linhas com gutter e barra de status */
+.editor {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  border: var(--linha) solid var(--border);
+  border-radius: var(--raio);
+  background: var(--surface);
+}
+.editor-barra, .editor-status {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--e-4);
+  padding: var(--e-2) var(--e-3);
+  font-size: var(--t-apoio);
+}
+.editor-barra { border-bottom: var(--linha) solid var(--border); }
+.editor-status { border-top: var(--linha) solid var(--border); color: var(--text-muted); }
+
+.codigo {
+  padding: var(--e-2) 0;
+  overflow-x: auto;            /* no celular, só o código rola na horizontal */
+  font-size: var(--t-codigo);
+  line-height: var(--altura-codigo);
+}
+.codigo:focus-visible { outline-offset: calc(-1 * var(--barra-selecao)); }
+
+.linha {
+  display: grid;
+  grid-template-columns: var(--e-6) var(--e-8) max-content auto;
+  align-items: center;
+  column-gap: var(--e-3);
+  min-width: max-content;
+  min-height: var(--alvo);
+  padding-right: var(--e-4);
+  border-left: var(--barra-selecao) solid transparent;
+  cursor: pointer;
+  transition: background-color var(--transicao), border-color var(--transicao);
+}
+.linha .simbolo { display: flex; justify-content: center; }
+.linha .num { text-align: right; color: var(--text-muted); }
+.linha code { font-family: inherit; white-space: pre; }
+.linha .nota { font-family: var(--fonte-texto); font-size: var(--t-apoio); padding-left: var(--e-4); }
+
+.linha:hover { background: var(--surface-selecao); border-left-color: var(--border-control); }
+.linha.selecionada { background: var(--surface-selecao); border-left-color: var(--accent); }
+.linha.selecionada .num { color: var(--text); }
+.codigo[aria-disabled="true"] .linha { cursor: default; }
+.codigo[aria-disabled="true"] .linha:hover:not(.selecionada) { background: transparent; border-left-color: transparent; }
+.linha.certa .simbolo, .linha.certa .nota { color: var(--success); }
+.linha.errada .simbolo, .linha.errada .nota { color: var(--danger); }
+.linha.certa { border-left-color: var(--success); }
+.linha.errada { border-left-color: var(--danger); }
+
+/* Realce de sintaxe: 4 cores */
+.s-palavra { color: var(--sintaxe-palavra); }
+.s-texto { color: var(--sintaxe-texto); }
+.s-numero { color: var(--sintaxe-numero); }
+.s-comentario { color: var(--sintaxe-comentario); font-style: italic; }
+
+/* Painel lateral: enunciado, dica, ações e feedback */
+.lateral { display: flex; flex-direction: column; gap: var(--e-4); }
+.bloco-dica { display: flex; flex-direction: column; align-items: flex-start; gap: var(--e-2); }
+.feedback {
+  display: flex;
+  flex-direction: column;
+  gap: var(--e-3);
+  padding-top: var(--e-4);
+  border-top: var(--linha) solid var(--border);
+}
+.feedback .subtitulo { display: flex; align-items: baseline; gap: var(--e-2); }
+.feedback [data-ref="feedbackTipo"]:empty { display: none; }
+
+/* Correção em formato diff: símbolo, número e linha; a cor sempre acompanha o símbolo */
+.diff {
+  border: var(--linha) solid var(--border);
+  border-radius: var(--raio);
+  font-size: var(--t-codigo);
+  line-height: var(--altura-codigo);
+  overflow-x: auto;
+}
+.diff:empty { display: none; }
+.diff-linha {
+  display: grid;
+  grid-template-columns: var(--e-4) var(--e-6) max-content;
+  column-gap: var(--e-2);
+  padding: var(--e-1) var(--e-3);
+  white-space: pre;
+  min-width: max-content;
+}
+.diff-linha .num { color: var(--text-muted); text-align: right; }
+.diff-removida .sinal, .diff-removida code { color: var(--danger); }
+.diff-adicionada .sinal, .diff-adicionada code { color: var(--success); }
+.diff code { font-family: inherit; }
+
+/* Desktop e tablet deitado: código à esquerda, painel lateral à direita */
+@media (min-width: 56rem) {
+  .area-jogo { grid-template-columns: minmax(0, 1fr) var(--largura-lateral); }
+}
+
+/* Celular: a dica de teclado não se aplica */
+@media (pointer: coarse) and (max-width: 48rem) {
+  .dica-teclado { display: none; }
+}
+
+/* ---------- Ranking (leitura a distância: linhas em --t-titulo) ---------- */
+.ranking-cabeca { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--e-3); }
+.tabela-ranking td { font-size: var(--t-titulo); }
+.tabela-ranking td .rotulo-linha { font-size: var(--t-apoio); color: var(--text-muted); padding-left: var(--e-2); }
+.tabela-ranking tr.sua-partida td { background: var(--surface); }
+.tabela-ranking tr.primeira td { font-weight: var(--peso-medio); }
+
+/* ---------- Administrador ---------- */
+.botao-perigo { color: var(--danger); }
+.sobreposicao {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  display: grid;
+  place-items: center;
+  padding:
+    calc(var(--sa-topo) + var(--e-4))
+    calc(var(--sa-direita) + var(--e-4))
+    calc(var(--sa-baixo) + var(--e-4))
+    calc(var(--sa-esquerda) + var(--e-4));
+  background: var(--bg);
+  overflow-y: auto;
+}
+.caixa {
+  display: flex;
+  flex-direction: column;
+  gap: var(--e-4);
+  width: 100%;
+  max-width: var(--largura-lateral);
+  padding: var(--e-6);
+  border: var(--linha) solid var(--border-control);
+  border-radius: var(--raio);
+  background: var(--surface);
+}
+.pin { font-size: var(--t-titulo); letter-spacing: var(--e-2); min-height: calc(var(--t-titulo) * 1.5); }
+.aviso-erro:empty { display: none; }
+.teclado { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--e-2); }
+.teclado .botao { font-family: var(--fonte-mono); }
+.caixa textarea {
+  width: 100%;
+  min-height: calc(var(--e-12) * 3);
+  padding: var(--e-2);
+  border: var(--linha) solid var(--border-control);
+  border-radius: var(--raio);
+  background: var(--bg);
+  font-size: var(--t-apoio);
+}

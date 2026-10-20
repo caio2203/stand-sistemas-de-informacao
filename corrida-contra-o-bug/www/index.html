@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <!-- viewport-fit=cover: o conteúdo ocupa a tela toda; as áreas seguras são tratadas no CSS com env(safe-area-inset-*) -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+  <meta name="theme-color" content="#15171b">
+  <title>Corrida contra o Bug | Sistemas de Informação IFBA</title>
+
+  <!-- Ordem: fontes, tokens (DESIGN.md), base comum, estilos do jogo -->
+  <link rel="stylesheet" href="compartilhado/fontes.css">
+  <link rel="stylesheet" href="compartilhado/tokens.css">
+  <link rel="stylesheet" href="compartilhado/base.css">
+  <link rel="stylesheet" href="css/app.css">
+
+  <!-- Toda a lógica está em src/. Ponto de entrada: src/main.js -->
+  <script type="module" src="src/main.js"></script>
+</head>
+<body>
+<div class="app">
+  <!-- ===================== MARCA =====================
+       Toque longo (2 s) na marca, na tela inicial, abre a área do administrador.
+       Para usar o logo oficial (versão para fundo escuro), coloque o arquivo em
+       www/img/logo.svg e troque o <svg> por: <img src="img/logo.svg" alt="">
+  ==================================================== -->
+  <header class="marca" data-ref="marca">
+    <svg viewBox="0 0 24 24" aria-hidden="true" fill="currentColor">
+      <circle cx="6" cy="5" r="3"/>
+      <rect x="13" y="2" width="6" height="6" rx="1"/>
+      <rect x="3" y="10" width="6" height="6" rx="1"/>
+      <rect x="13" y="10" width="6" height="6" rx="1"/>
+      <rect x="3" y="18" width="6" height="4" rx="1"/>
+      <rect x="13" y="18" width="6" height="4" rx="1"/>
+    </svg>
+    <span>Sistemas de Informação · IFBA</span>
+  </header>
+
+  <main class="palco">
+    <!-- ===================== TELA: INÍCIO ===================== -->
+    <section class="tela" data-tela="inicio" aria-labelledby="titulo-inicio">
+      <div class="coluna">
+        <h1 class="titulo" id="titulo-inicio">Corrida contra o Bug</h1>
+        <p class="leitura" data-ref="regras"></p>
+
+        <div class="campo">
+          <label for="apelido">Apelido</label>
+          <input id="apelido" data-ref="apelido" type="text" autocomplete="off" autocorrect="off" spellcheck="false" enterkeyhint="go" aria-describedby="dica-apelido">
+          <span class="apoio" id="dica-apelido" data-ref="dica"></span>
+        </div>
+
+        <p class="aviso-erro" data-ref="erroConteudo" role="alert" hidden></p>
+        <div class="acoes">
+          <button class="botao botao-primario" data-ref="jogar">Jogar</button>
+          <button class="botao" data-ref="verRanking">Ver ranking</button>
+        </div>
+        <p class="apoio" data-ref="recorde"></p>
+      </div>
+    </section>
+
+    <!-- ===================== TELA: JOGO ===================== -->
+    <section class="tela tela-jogo" data-tela="jogo" aria-label="Desafio">
+      <div class="cabecalho-partida">
+        <span><span class="apoio">Jogador</span> <span data-ref="apelido"></span></span>
+        <span><span class="apoio">Pontos</span> <span class="mono" data-ref="pontos">0</span></span>
+        <span class="tempo"><span class="apoio">Tempo</span> <span class="mono" data-ref="tempo" aria-label="Tempo restante"></span></span>
+      </div>
+      <div class="trilho" aria-hidden="true"><div data-ref="barraTempo"></div></div>
+      <p class="apoio aviso-tempo" data-ref="tempoAviso" aria-live="polite"></p>
+
+      <div class="area-jogo">
+        <section class="editor" aria-label="Código">
+          <div class="editor-barra mono">
+            <span data-ref="arquivo"></span>
+            <span class="apoio">Python</span>
+          </div>
+          <div class="codigo mono" data-ref="codigo" role="listbox" tabindex="0" aria-label="Linhas do código. Selecione a linha com erro."></div>
+          <div class="editor-status mono" data-ref="status" aria-live="polite"></div>
+        </section>
+
+        <aside class="lateral">
+          <p class="mono apoio" data-ref="contador"></p>
+          <p class="leitura">Há um erro neste trecho. Selecione a linha que o contém.</p>
+
+          <div class="bloco-dica" data-ref="blocoDica">
+            <button class="botao" data-ref="mostrarDica">Mostrar dica</button>
+            <p class="leitura" data-ref="dica" hidden></p>
+          </div>
+
+          <div class="acoes" data-ref="acoes">
+            <button class="botao botao-primario" data-ref="confirmar" disabled>Confirmar linha</button>
+          </div>
+          <p class="apoio dica-teclado" data-ref="teclado">Setas escolhem a linha, Enter confirma, Esc limpa.</p>
+
+          <div class="feedback" data-ref="feedback" role="status" aria-live="polite" hidden>
+            <p class="subtitulo" data-ref="feedbackTitulo"></p>
+            <p class="mono" data-ref="feedbackPontos"></p>
+            <p class="apoio" data-ref="feedbackTipo"></p>
+            <p class="leitura" data-ref="feedbackTexto"></p>
+            <div class="diff mono" data-ref="diff" aria-label="Correção"></div>
+            <div class="acoes"><button class="botao botao-primario" data-ref="proxima">Próximo desafio</button></div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- ===================== TELA: FIM DE JOGO ===================== -->
+    <section class="tela" data-tela="fim" aria-labelledby="titulo-fim">
+      <div class="coluna">
+        <h1 class="titulo" id="titulo-fim" data-ref="titulo"></h1>
+        <p data-ref="recorde" hidden>Novo recorde neste aparelho.</p>
+        <table class="tabela">
+          <tbody>
+            <tr><th scope="row">Pontos</th><td class="numero" data-ref="pontos"></td></tr>
+            <tr><th scope="row">Acertos</th><td class="numero" data-ref="acertos"></td></tr>
+            <tr><th scope="row">Erros</th><td class="numero" data-ref="erros"></td></tr>
+            <tr><th scope="row">Posição no ranking</th><td class="numero" data-ref="posicao"></td></tr>
+          </tbody>
+        </table>
+        <div class="acoes">
+          <button class="botao botao-primario" data-ref="jogarNovamente">Jogar novamente</button>
+          <button class="botao" data-ref="verRanking">Ver ranking</button>
+          <button class="botao" data-ref="inicio">Início</button>
+        </div>
+        <p class="apoio" data-ref="contagem"></p>
+      </div>
+    </section>
+
+    <!-- ===================== TELA: RANKING ===================== -->
+    <section class="tela" data-tela="ranking" aria-labelledby="titulo-ranking">
+      <div class="coluna coluna-ranking">
+        <div class="ranking-cabeca">
+          <h1 class="titulo" id="titulo-ranking">Ranking: 10 melhores</h1>
+          <button class="botao" data-ref="voltar">Voltar</button>
+        </div>
+        <table class="tabela tabela-ranking">
+          <thead><tr><th scope="col" class="numero">Posição</th><th scope="col">Apelido</th><th scope="col" class="numero">Pontos</th></tr></thead>
+          <tbody data-ref="lista"></tbody>
+        </table>
+        <p class="apoio" data-ref="vazio" hidden>Nenhuma partida registrada neste aparelho.</p>
+      </div>
+    </section>
+  </main>
+</div>
+
+<!-- ===================== ADMINISTRADOR: PIN ===================== -->
+<div class="sobreposicao" data-admin="pin" role="dialog" aria-modal="true" aria-labelledby="titulo-pin" hidden>
+  <div class="caixa">
+    <h2 class="titulo" id="titulo-pin">Área do administrador</h2>
+    <p>Digite o PIN.</p>
+    <p class="mono pin" data-ref="pontos" aria-live="polite"></p>
+    <p class="aviso-erro" data-ref="erro" role="alert"></p>
+    <div class="teclado" data-ref="teclado"></div>
+    <button class="botao" data-ref="cancelar">Cancelar</button>
+  </div>
+</div>
+
+<!-- ===================== ADMINISTRADOR: PAINEL ===================== -->
+<div class="sobreposicao" data-admin="painel" role="dialog" aria-modal="true" aria-labelledby="titulo-painel" hidden>
+  <div class="caixa">
+    <h2 class="titulo" id="titulo-painel">Administrador</h2>
+    <p class="apoio" data-ref="info"></p>
+    <div class="acoes">
+      <button class="botao botao-primario" data-ref="exportar">Exportar ranking (CSV)</button>
+      <button class="botao botao-perigo" data-ref="zerar">Zerar ranking</button>
+    </div>
+    <p data-ref="mensagem" role="status"></p>
+    <textarea class="mono" data-ref="csv" readonly hidden aria-label="Conteúdo do ranking em CSV"></textarea>
+    <button class="botao" data-ref="fechar">Fechar</button>
+  </div>
+</div>
+</body>
+</html>
