@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <!-- viewport-fit=cover: o conteúdo ocupa a tela toda; as áreas seguras são tratadas no CSS com env(safe-area-inset-*) -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+  <meta name="theme-color" content="#15171b">
+  <title>Qual área combina com você | Sistemas de Informação IFBA</title>
+
+  <!-- Ordem: fontes, tokens (DESIGN.md), base comum, estilos do quiz -->
+  <link rel="stylesheet" href="compartilhado/fontes.css">
+  <link rel="stylesheet" href="compartilhado/tokens.css">
+  <link rel="stylesheet" href="compartilhado/base.css">
+  <link rel="stylesheet" href="css/app.css">
+
+  <!-- Toda a lógica está em src/. Ponto de entrada: src/main.js -->
+  <script type="module" src="src/main.js"></script>
+</head>
+<body>
+<div class="app">
+  <!-- ===================== MARCA =====================
+       Marca provisória, monocromática. Para usar o logo oficial (versão para fundo escuro),
+       coloque o arquivo em www/img/logo.svg e troque o <svg> por:
+       <img src="img/logo.svg" alt="">
+  ==================================================== -->
+  <header class="marca">
+    <svg viewBox="0 0 24 24" aria-hidden="true" fill="currentColor">
+      <circle cx="6" cy="5" r="3"/>
+      <rect x="13" y="2" width="6" height="6" rx="1"/>
+      <rect x="3" y="10" width="6" height="6" rx="1"/>
+      <rect x="13" y="10" width="6" height="6" rx="1"/>
+      <rect x="3" y="18" width="6" height="4" rx="1"/>
+      <rect x="13" y="18" width="6" height="4" rx="1"/>
+    </svg>
+    <span>Sistemas de Informação · IFBA</span>
+  </header>
+
+  <main class="palco">
+    <!-- ===================== TELA: INÍCIO ===================== -->
+    <section class="tela" data-tela="inicio" aria-labelledby="titulo-inicio">
+      <div class="coluna">
+        <h1 class="titulo" id="titulo-inicio">Qual área da tecnologia combina com você?</h1>
+        <p class="leitura" data-ref="descricao"></p>
+        <p class="apoio leitura" data-ref="areas"></p>
+
+        <fieldset class="grupo">
+          <legend>Tempo</legend>
+          <label class="escolha"><input type="radio" name="tempo" value="com" checked data-ref="comTempo"> <span data-ref="rotuloComTempo"></span></label>
+          <label class="escolha"><input type="radio" name="tempo" value="sem"> <span>Sem tempo</span></label>
+        </fieldset>
+
+        <p class="aviso-erro" data-ref="erro" role="alert" hidden></p>
+        <div class="acoes">
+          <button class="botao botao-primario" data-ref="comecar">Iniciar</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== TELA: PERGUNTA ===================== -->
+    <section class="tela" data-tela="pergunta" aria-label="Questão">
+      <div class="coluna">
+        <div class="cabecalho-jogo">
+          <span>Qual área combina com você</span>
+          <span class="mono" data-ref="progressoTexto"></span>
+          <span class="mono tempo" data-ref="tempo" aria-label="Tempo restante"></span>
+        </div>
+        <div class="trilho" aria-hidden="true"><div data-ref="progressoBarra"></div></div>
+        <div class="trilho trilho-tempo" data-ref="tempoTrilho" aria-hidden="true"><div data-ref="tempoBarra"></div></div>
+        <p class="apoio aviso-tempo" data-ref="tempoAviso" aria-live="polite"></p>
+
+        <fieldset class="questao" data-ref="questao" tabindex="-1">
+          <legend class="titulo" data-ref="texto"></legend>
+          <div class="alternativas" data-ref="opcoes"></div>
+        </fieldset>
+
+        <div class="acoes" data-ref="acoesConfirmar">
+          <button class="botao botao-primario" data-ref="confirmar" disabled>Confirmar resposta</button>
+          <span class="apoio" data-ref="estadoSelecao">Nenhuma alternativa selecionada.</span>
+        </div>
+
+        <div class="feedback" data-ref="feedback" role="status" aria-live="polite" hidden>
+          <p class="subtitulo" data-ref="feedbackTitulo"></p>
+          <p class="leitura" data-ref="feedbackTexto"></p>
+          <div class="acoes"><button class="botao botao-primario" data-ref="proxima"></button></div>
+        </div>
+
+        <p class="apoio dica-teclado">Teclado: A a D ou 1 a 4 escolhem, Enter confirma.</p>
+      </div>
+    </section>
+
+    <!-- ===================== TELA: RESULTADO ===================== -->
+    <section class="tela" data-tela="resultado" aria-labelledby="titulo-resultado">
+      <div class="coluna">
+        <h1 class="titulo" id="titulo-resultado" data-ref="nome"></h1>
+        <p class="leitura" data-ref="descricao"></p>
+        <p class="apoio mono" data-ref="resumo"></p>
+
+        <h2 class="subtitulo">No curso de Sistemas de Informação</h2>
+        <ul class="lista leitura" data-ref="estudos"></ul>
+
+        <h2 class="subtitulo">Pontuação por área</h2>
+        <table class="tabela">
+          <thead><tr><th scope="col">Área</th><th scope="col" class="numero">Pontos</th></tr></thead>
+          <tbody data-ref="tabela"></tbody>
+        </table>
+
+        <p class="leitura" data-ref="proximoPasso"></p>
+        <div class="acoes">
+          <button class="botao botao-primario" data-ref="jogarNovamente">Jogar novamente</button>
+          <button class="botao" data-ref="inicio">Início</button>
+        </div>
+        <p class="apoio" data-ref="contagem"></p>
+      </div>
+    </section>
+  </main>
+</div>
+</body>
+</html>

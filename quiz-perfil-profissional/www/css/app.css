@@ -1,0 +1,79 @@
+/* ==========================================================================
+   QUIZ: layout e componentes específicos. Só tokens (compartilhado/tokens.css).
+   ========================================================================== */
+
+/* Coluna única, conteúdo alinhado à esquerda */
+.coluna {
+  display: flex;
+  flex-direction: column;
+  gap: var(--e-4);
+  width: 100%;
+  max-width: var(--largura-coluna);
+  margin: 0 auto;
+  padding-bottom: var(--e-8);
+}
+.coluna > .subtitulo { margin-top: var(--e-4); }
+
+/* Cabeçalho da questão: nome, contador e tempo na mesma linha */
+.cabecalho-jogo {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--e-2) var(--e-4);
+  color: var(--text-muted);
+  font-size: var(--t-apoio);
+}
+.cabecalho-jogo .tempo { margin-left: auto; color: var(--text); }
+.trilho > div { transition: width var(--transicao); }
+.trilho-tempo { margin-top: calc(-1 * var(--e-3)); }
+.aviso-tempo:empty { display: none; }
+
+/* Questão: enunciado + lista vertical de alternativas */
+.questao { display: flex; flex-direction: column; gap: var(--e-4); margin-top: var(--e-4); }
+.questao legend { margin-bottom: var(--e-4); }
+.questao:focus { outline: none; } /* recebe foco só por script, não é interativo */
+.alternativas { display: flex; flex-direction: column; gap: var(--e-2); }
+
+.alternativa {
+  display: flex;
+  align-items: center;
+  gap: var(--e-3);
+  min-height: var(--alvo);
+  padding: var(--e-3) var(--e-4);
+  border: var(--linha) solid var(--border-control);
+  border-radius: var(--raio);
+  cursor: pointer;
+  transition: border-color var(--transicao), background-color var(--transicao);
+}
+.alternativa:hover { border-color: var(--text-muted); }
+.alternativa:has(input:focus-visible) { outline: var(--barra-selecao) solid var(--accent); outline-offset: var(--barra-selecao); }
+.alternativa:has(input:checked) { border-color: var(--accent); background: var(--surface); }
+.alternativa input { position: absolute; opacity: 0; width: var(--linha); height: var(--linha); }
+.alternativa .letra { font-family: var(--fonte-mono); color: var(--text-muted); flex: none; }
+.alternativa .texto { flex: 1; }
+.alternativa .marcador { font-size: var(--t-apoio); color: var(--text-muted); flex: none; }
+.alternativas[aria-disabled="true"] .alternativa { cursor: default; }
+.alternativas[aria-disabled="true"] .alternativa:not(:has(input:checked)) { color: var(--text-muted); }
+.alternativas[aria-disabled="true"] .alternativa:hover:not(:has(input:checked)) { border-color: var(--border-control); }
+
+/* Feedback logo abaixo, sem modal */
+.feedback {
+  display: flex;
+  flex-direction: column;
+  gap: var(--e-3);
+  padding: var(--e-4);
+  border-left: var(--barra-selecao) solid var(--border-control);
+  background: var(--surface);
+}
+
+.dica-teclado { margin-top: var(--e-4); }
+
+/* Resultado */
+.lista { padding-left: var(--e-6); display: flex; flex-direction: column; gap: var(--e-1); }
+.tabela tr.vencedora td { font-weight: var(--peso-medio); }
+.tabela .rotulo-linha { color: var(--text-muted); font-weight: var(--peso-normal); font-size: var(--t-apoio); }
+
+/* Celular: a dica de teclado não se aplica */
+@media (pointer: coarse) and (max-width: 48rem) {
+  .dica-teclado { display: none; }
+}

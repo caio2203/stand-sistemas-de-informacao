@@ -1,0 +1,10 @@
+{
+  "appId": "br.edu.ifba.si.quiz",
+  "appName": "Quiz SI IFBA",
+  "webDir": "www",
+  "plugins": {
+    "StatusBar": {
+      "overlaysWebView": true
+    }
+  }
+}
