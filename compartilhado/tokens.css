@@ -1,0 +1,70 @@
+/* ==========================================================================
+   TOKENS DE DESIGN (fonte única: ver DESIGN.md na raiz do stand)
+   Nenhum outro arquivo define cor, tamanho de fonte, espaçamento ou raio.
+   ========================================================================== */
+:root {
+  color-scheme: dark;
+
+  /* Cor */
+  --bg: #15171b;
+  --surface: #1c1f24;
+  --surface-selecao: #23272d;
+  --border: #2e3239;
+  --border-control: #6b727d;
+  --text: #e6e8eb;
+  --text-muted: #a3aab4;
+  --accent: #d9a441;
+  --accent-texto: #15171b;
+  --success: #62bd73;   /* matiz do verde institucional dos IFs */
+  --danger: #ec8584;    /* matiz do vermelho institucional dos IFs */
+
+  /* Realce de sintaxe (4 cores) */
+  --sintaxe-palavra: #8fbbe3;
+  --sintaxe-texto: #a9cc8c;
+  --sintaxe-numero: #9fd3d0;
+  --sintaxe-comentario: var(--text-muted);
+
+  /* Tipografia */
+  --fonte-texto: "IBM Plex Sans", sans-serif;
+  --fonte-mono: "IBM Plex Mono", monospace;
+  --t-apoio: 0.875rem;
+  --t-corpo: 1rem;
+  --t-titulo: 1.375rem;
+  --t-codigo: var(--t-apoio);
+  --altura-texto: 1.5;
+  --altura-codigo: 1.6;
+  --peso-normal: 400;
+  --peso-medio: 500;
+  --peso-titulo: 600;
+
+  /* Espaçamento (múltiplos de 4px na base) */
+  --e-1: 0.25rem;
+  --e-2: 0.5rem;
+  --e-3: 0.75rem;
+  --e-4: 1rem;
+  --e-6: 1.5rem;
+  --e-8: 2rem;
+  --e-12: 3rem;
+
+  /* Forma */
+  --raio: 0.1875rem;
+  --linha: 1px;
+  --barra-selecao: 2px;
+  --barra-progresso: 3px;
+  --alvo: 2.75rem;
+  --icone: 1em;
+
+  /* Larguras */
+  --largura-coluna: 42.5rem;
+  --largura-lateral: 21.25rem;
+  --largura-leitura: 68ch;
+
+  /* Movimento */
+  --transicao: 140ms ease;
+
+  /* Áreas seguras (exigem viewport-fit=cover na meta viewport) */
+  --sa-topo: env(safe-area-inset-top, 0px);
+  --sa-direita: env(safe-area-inset-right, 0px);
+  --sa-baixo: env(safe-area-inset-bottom, 0px);
+  --sa-esquerda: env(safe-area-inset-left, 0px);
+}

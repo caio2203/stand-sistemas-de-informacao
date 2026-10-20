@@ -1,0 +1,157 @@
+/* ==========================================================================
+   BASE COMPARTILHADA: estrutura, áreas seguras e componentes comuns.
+   Usa apenas os tokens de tokens.css. Ver DESIGN.md.
+   ========================================================================== */
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* Fonte raiz: 16px no celular, maior em tablets para leitura a distância (DESIGN.md) */
+html {
+  font-size: clamp(100%, 0.5rem + 1.25vmin, 125%);
+  height: 100%;
+  background: var(--bg);
+}
+
+body {
+  height: 100%;
+  overflow: hidden;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--fonte-texto);
+  font-size: var(--t-corpo);
+  font-weight: var(--peso-normal);
+  line-height: var(--altura-texto);
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  overscroll-behavior: none;
+}
+
+button, input, textarea { font: inherit; color: inherit; }
+button { cursor: pointer; }
+button:disabled { cursor: not-allowed; }
+[hidden] { display: none !important; }
+fieldset { border: 0; min-width: 0; }
+
+/* Foco visível em todos os elementos interativos */
+:focus-visible {
+  outline: var(--barra-selecao) solid var(--accent);
+  outline-offset: var(--barra-selecao);
+}
+
+/* Contêiner raiz: tela toda, respeitando as áreas seguras */
+.app {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  padding:
+    calc(var(--sa-topo) + var(--e-4))
+    calc(var(--sa-direita) + var(--e-4))
+    calc(var(--sa-baixo) + var(--e-4))
+    calc(var(--sa-esquerda) + var(--e-4));
+}
+
+/* Cabeçalho com a marca do curso */
+.marca {
+  display: flex;
+  align-items: center;
+  gap: var(--e-2);
+  padding-bottom: var(--e-3);
+  margin-bottom: var(--e-4);
+  border-bottom: var(--linha) solid var(--border);
+  color: var(--text-muted);
+  font-size: var(--t-apoio);
+  flex: none;
+}
+.marca svg, .marca img { height: var(--e-6); width: auto; flex: none; }
+
+/* Palco e telas: uma tela visível por vez, sem animação de entrada */
+.palco { position: relative; flex: 1; min-height: 0; }
+.tela {
+  position: absolute;
+  inset: 0;
+  display: none;
+  flex-direction: column;
+  overflow-y: auto;
+}
+.tela.ativa { display: flex; }
+
+/* ---------- Tipografia ---------- */
+.titulo { font-size: var(--t-titulo); font-weight: var(--peso-titulo); line-height: 1.3; }
+.subtitulo { font-size: var(--t-corpo); font-weight: var(--peso-medio); }
+.apoio { font-size: var(--t-apoio); color: var(--text-muted); }
+.mono { font-family: var(--fonte-mono); }
+.leitura { max-width: var(--largura-leitura); }
+
+/* ---------- Botões ---------- */
+.botao {
+  min-height: var(--alvo);
+  padding: var(--e-2) var(--e-4);
+  border: var(--linha) solid var(--border-control);
+  border-radius: var(--raio);
+  background: transparent;
+  color: var(--text);
+  font-weight: var(--peso-medio);
+  transition: border-color var(--transicao), background-color var(--transicao), color var(--transicao);
+}
+.botao:hover:not(:disabled) { border-color: var(--text-muted); }
+.botao-primario {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: var(--accent-texto);
+}
+.botao-primario:hover:not(:disabled) { border-color: var(--text); }
+.botao:disabled { border-color: var(--border); background: transparent; color: var(--text-muted); }
+.acoes { display: flex; flex-wrap: wrap; gap: var(--e-3); align-items: center; }
+
+/* ---------- Campos ---------- */
+.campo { display: flex; flex-direction: column; gap: var(--e-1); }
+.campo label, .grupo legend { font-weight: var(--peso-medio); }
+.campo input[type="text"] {
+  min-height: var(--alvo);
+  padding: var(--e-2) var(--e-3);
+  border: var(--linha) solid var(--border-control);
+  border-radius: var(--raio);
+  background: var(--surface);
+  font-family: var(--fonte-mono);
+  transition: border-color var(--transicao);
+}
+.campo input[type="text"]:focus-visible { border-color: var(--accent); }
+.campo input[aria-invalid="true"] { border-color: var(--danger); }
+
+/* Grupo de opções (rádio nativo com rótulo grande) */
+.grupo { display: flex; flex-direction: column; gap: var(--e-2); }
+.escolha {
+  display: flex;
+  align-items: center;
+  gap: var(--e-3);
+  min-height: var(--alvo);
+  padding: var(--e-2) var(--e-3);
+  border: var(--linha) solid var(--border-control);
+  border-radius: var(--raio);
+  cursor: pointer;
+  transition: border-color var(--transicao), background-color var(--transicao);
+}
+.escolha:hover { border-color: var(--text-muted); }
+.escolha:has(input:checked) { border-color: var(--accent); background: var(--surface); }
+.escolha input { accent-color: var(--accent); width: var(--e-4); height: var(--e-4); flex: none; }
+
+/* ---------- Mensagens ---------- */
+.aviso-erro { color: var(--danger); }
+.icone { width: var(--icone); height: var(--icone); flex: none; vertical-align: -0.125em; }
+.correto { color: var(--success); }
+.incorreto { color: var(--danger); }
+
+/* ---------- Barras finas (progresso e tempo) ---------- */
+.trilho { height: var(--barra-progresso); background: var(--border); flex: none; }
+.trilho > div { height: 100%; width: 100%; background: var(--text-muted); transform-origin: left center; }
+
+/* ---------- Tabelas ---------- */
+.tabela { width: 100%; border-collapse: collapse; font-size: var(--t-corpo); }
+.tabela th, .tabela td { text-align: left; padding: var(--e-2) var(--e-3); border-bottom: var(--linha) solid var(--border); }
+.tabela th { font-weight: var(--peso-medio); color: var(--text-muted); font-size: var(--t-apoio); }
+.tabela .numero { text-align: right; font-family: var(--fonte-mono); }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition-duration: 0.01ms !important; }
+}
