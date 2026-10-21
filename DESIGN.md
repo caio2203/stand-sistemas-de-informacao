@@ -54,6 +54,7 @@ Line-height 1,5 no texto e 1,6 no código. Largura máxima de leitura de 68ch. S
 | `--accent-texto` | `#15171b` | texto sobre o botão primário | 8,0:1 |
 | `--success` | `#62bd73` | correto (sempre com check e texto) | 7,1:1 |
 | `--danger` | `#ec8584` | incorreto (sempre com x e texto) | 6,5:1 |
+| `--grafico` | `#8fbbe3` | forma do gráfico de radar do quiz | 8,2:1 |
 
 Realce de sintaxe (4 cores, medidas sobre `--surface`): palavra-chave `#8fbbe3` (8,2:1), string `#a9cc8c` (9,2:1), número `#9fd3d0` (10,0:1), comentário `--text-muted` em itálico (7,1:1). Nomes de função ficam na cor do texto.
 
@@ -92,6 +93,7 @@ Português do Brasil, frases curtas e neutras, sem exclamação: "Iniciar", "Con
 ## Conflitos com a lógica existente (mantida a lógica)
 
 - **Quiz sem resposta certa.** É um quiz de perfil: nenhuma alternativa é correta. Em vez de "Correto./Incorreto.", o feedback diz para quais áreas a resposta somou pontos. O resultado mostra a pontuação por área em vez de acertos.
+- **Gráfico de radar no resultado (pedido do curso).** A pontuação por área virou um radar de 6 vértices, com nível A a E em `--danger` e pontos em mono, seguindo a referência aprovada. A forma usa `--grafico` com preenchimento translúcido (cor chapada, sem gradiente). Os textos são HTML posicionado sobre o SVG, para não encolherem com o gráfico no celular.
 - **Tela inicial do quiz.** Não há categorias nem número de questões variável na lógica; o formulário oferece só a escolha do tempo.
 - **Tempo do quiz.** Padrão "15 s por questão" para manter a partida abaixo de 2 minutos no stand; "Sem tempo" fica disponível. Como cada questão tem 15 s, o aviso em texto aparece nos últimos 5 s, e não nos últimos 10.
 - **Tempo do Corrida contra o Bug.** A rodada de 90 s e a pontuação por rapidez são a mecânica do jogo e não foram tornadas opcionais. O tempo fica visível no cabeçalho, sem cores de semáforo, com aviso em texto nos últimos 10 s.

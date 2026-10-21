@@ -17,6 +17,7 @@
   --accent-texto: #15171b;
   --success: #62bd73;   /* matiz do verde institucional dos IFs */
   --danger: #ec8584;    /* matiz do vermelho institucional dos IFs */
+  --grafico: #8fbbe3;   /* forma do gráfico de radar do quiz (mesmo azul da palavra-chave) */
 
   /* Realce de sintaxe (4 cores) */
   --sintaxe-palavra: #8fbbe3;

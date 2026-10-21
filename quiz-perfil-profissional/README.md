@@ -7,7 +7,7 @@ Quiz de 7 perguntas leves, do dia a dia, que mostra com qual área da tecnologia
 1. Tela inicial com a descrição, a escolha do tempo (15 s por questão ou sem tempo) e o botão **Iniciar**.
 2. 7 perguntas com 4 alternativas. Cada alternativa soma pontos para uma ou mais áreas.
 3. Escolher a alternativa (toque, A a D ou 1 a 4) e tocar em **Confirmar resposta**. Abaixo aparece para quais áreas a resposta somou pontos, e **Próxima questão** segue.
-4. Resultado: a área, a descrição, um resumo em números, 3 coisas estudadas no curso, a pontuação de todas as áreas e as funções comuns na área.
+4. Resultado: a área, a descrição, um resumo em números, 3 coisas estudadas no curso, um gráfico de radar com o nível (A a E) e os pontos de cada área, e as funções comuns na área. A área com mais pontos fica no nível A; as outras, proporcionalmente, até E (nenhum ponto).
 5. **Jogar novamente** ou volta automática ao início após 30 s sem toques.
 
 **Garantia dos 2 minutos:** com tempo (padrão), cada pergunta tem no máximo 15 s, com aviso em texto nos últimos 5 s; se o tempo acabar, ela é pulada sem pontos. A opção "Sem tempo" existe para quem preferir, e a inatividade de 30 s continua valendo. Em empate no primeiro lugar, a área é sorteada entre as empatadas.
@@ -37,7 +37,7 @@ www/
     main.js             raiz de composição: monta as telas e liga tudo
     config.js           ajustes gerais
     dados/              conteúdo editável (áreas e perguntas)
-    dominio/quiz.js     regras: pontuação, resultado, validação do conteúdo
+    dominio/quiz.js     regras: pontuação, resultado, nível A a E, validação do conteúdo
     ui/                 telas (início, pergunta, resultado)
 testes/quiz.test.js     testes das regras (node --test)
 android-personalizado/  MainActivity.java com o modo imersivo

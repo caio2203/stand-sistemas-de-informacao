@@ -4,7 +4,7 @@
  */
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { PartidaQuiz, calcularResultado, somarPontos, validarConteudo } from "../www/src/dominio/quiz.js";
+import { PartidaQuiz, calcularResultado, nivelDaArea, somarPontos, validarConteudo } from "../www/src/dominio/quiz.js";
 import { AREAS } from "../www/src/dados/areas.js";
 import { PERGUNTAS } from "../www/src/dados/perguntas.js";
 
@@ -79,4 +79,10 @@ test("validarConteudo aponta área desconhecida e área inalcançável", () => {
   const problemas = validarConteudo(areas, perguntas);
   assert.ok(problemas.some((p) => p.includes('área desconhecida "w"')));
   assert.ok(problemas.some((p) => p.includes('Área "y" nunca recebe pontos')));
+});
+
+test("nível da área vai de A (máximo) a E (zero)", () => {
+  assert.deepEqual([8, 6, 4, 2, 0].map((p) => nivelDaArea(p, 8)), ["A", "B", "C", "D", "E"]);
+  assert.equal(nivelDaArea(3, 8), "C"); // 37,5% arredonda para a faixa do meio
+  assert.equal(nivelDaArea(0, 0), "E"); // todas puladas: nenhuma área pontuou
 });

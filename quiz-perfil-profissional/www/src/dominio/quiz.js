@@ -38,6 +38,14 @@ export function calcularResultado(pontuacao, sortear = Math.random) {
 }
 
 /**
+ * Nível da área no gráfico do resultado, de A (tantos pontos quanto a primeira
+ * colocada) a E (nenhum ponto), em 4 faixas iguais entre 0 e o máximo.
+ */
+export function nivelDaArea(pontos, maximo) {
+  return "EDCBA"[maximo > 0 ? Math.round((Math.max(0, Math.min(pontos, maximo)) / maximo) * 4) : 0];
+}
+
+/**
  * Confere se o conteúdo editável está consistente.
  * Devolve uma lista de problemas (vazia quando está tudo certo).
  */

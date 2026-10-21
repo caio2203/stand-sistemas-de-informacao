@@ -70,8 +70,35 @@
 
 /* Resultado */
 .lista { padding-left: var(--e-6); display: flex; flex-direction: column; gap: var(--e-1); }
-.tabela tr.vencedora td { font-weight: var(--peso-medio); }
-.tabela .rotulo-linha { color: var(--text-muted); font-weight: var(--peso-normal); font-size: var(--t-apoio); }
+
+/* Gráfico de radar: SVG para as formas, HTML para os textos (não encolhem com o gráfico) */
+.radar { padding: calc(var(--e-12) + var(--e-6)) 0; }
+.radar-plano { position: relative; width: min(60%, 24rem); aspect-ratio: 1; margin: 0 auto; }
+.radar-plano svg { display: block; width: 100%; height: 100%; overflow: visible; }
+.radar-anel, .radar-eixo { fill: none; stroke: var(--border); stroke-width: var(--linha); vector-effect: non-scaling-stroke; }
+.radar-forma {
+  fill: var(--grafico);
+  fill-opacity: 0.3;
+  stroke: var(--grafico);
+  stroke-width: var(--barra-selecao);
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+}
+.radar-ponto { fill: var(--grafico); }
+.radar-escala, .radar-rotulo { position: absolute; }
+.radar-escala { font-family: var(--fonte-mono); font-size: var(--t-apoio); line-height: 1; color: var(--text-muted); }
+.radar-rotulo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: max-content;
+  text-align: center;
+  font-size: var(--t-apoio);
+}
+.radar-rotulo.lateral { max-width: 33%; } /* cabe no espaço entre o gráfico e a borda, mesmo no celular */
+.radar-nome { font-weight: var(--peso-medio); }
+.radar-nivel { font-size: var(--t-corpo); font-weight: var(--peso-medio); color: var(--danger); }
+.radar-pontos { font-family: var(--fonte-mono); color: var(--text-muted); }
 
 /* Celular: a dica de teclado não se aplica */
 @media (pointer: coarse) and (max-width: 48rem) {
