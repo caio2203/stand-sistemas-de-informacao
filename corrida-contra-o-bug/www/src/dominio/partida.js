@@ -16,9 +16,12 @@ export function embaralhar(lista, aleatorio = Math.random) {
   return copia;
 }
 
-/** Ordem aleatória dentro de cada nível, com os níveis em sequência (fácil, médio, difícil). */
-export function montarFila(trechos, ordemNiveis, aleatorio = Math.random) {
-  return ordemNiveis.flatMap((nivel) => embaralhar(trechos.filter((t) => t.nivel === nivel), aleatorio));
+/**
+ * Sorteia até `porNivel` trechos de cada nível, em ordem aleatória,
+ * com os níveis em sequência (fácil, médio, difícil).
+ */
+export function montarFila(trechos, ordemNiveis, aleatorio = Math.random, porNivel = Infinity) {
+  return ordemNiveis.flatMap((nivel) => embaralhar(trechos.filter((t) => t.nivel === nivel), aleatorio).slice(0, porNivel));
 }
 
 /** Acerto rápido vale mais: começa em `maximos` e cai por segundo, até `minimos`. */
@@ -44,13 +47,13 @@ export class PartidaBug {
    * @param {object} opcoes
    * @param {string} opcoes.apelido
    * @param {Array}  opcoes.trechos     trechos de dados/trechos.js
-   * @param {object} opcoes.config      CONFIG (duracaoRodada, pontuacao, ordemNiveis)
+   * @param {object} opcoes.config      CONFIG (duracaoRodada, pontuacao, ordemNiveis, trechosPorNivel)
    * @param {Function} [opcoes.aleatorio]
    */
   constructor({ apelido, trechos, config, aleatorio = Math.random }) {
     this.apelido = apelido;
     this.regras = config.pontuacao;
-    this.fila = montarFila(trechos, config.ordemNiveis, aleatorio);
+    this.fila = montarFila(trechos, config.ordemNiveis, aleatorio, config.trechosPorNivel);
     this.pontos = 0;
     this.acertos = 0;
     this.erros = 0;

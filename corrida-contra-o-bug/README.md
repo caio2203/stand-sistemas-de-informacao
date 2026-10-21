@@ -6,7 +6,7 @@ O jogador vê trechos curtos de código Python, cada um com **exatamente um erro
 
 1. **Início:** campo de apelido (sem dados pessoais) e botão **Jogar**. O apelido aceita só letras, números, espaço, `_` e `-`, com até 12 caracteres.
 2. **Rodada de 90 s** com cronômetro visível (fica vermelho nos últimos 10 s).
-3. **Trechos de 3 a 6 linhas.** 15 trechos em 3 níveis (5 fáceis, 5 médios, 5 difíceis). A ordem é sorteada dentro de cada nível e os níveis vêm em sequência: fácil, médio, difícil. Nenhum trecho se repete na partida.
+3. **Trechos de 3 a 6 linhas.** 36 trechos em 3 níveis (12 fáceis, 12 médios, 12 difíceis). Cada partida sorteia 5 de cada nível, em ordem aleatória, e os níveis vêm em sequência: fácil, médio, difícil. Nenhum trecho se repete na partida, e partidas seguidas recebem trechos diferentes.
 4. **Pontuação:** acerto vale 100 pontos, menos 6 por segundo pensando, com mínimo de 10. Erro desconta 30 (a pontuação nunca fica negativa). Cada trecho aceita uma resposta.
 5. **Selecionar e confirmar:** toque na linha (ou use as setas), veja "Linha 3 selecionada" na barra de status e toque em **Confirmar linha**. Esc limpa a seleção. Há uma dica opcional em cada desafio.
 6. **Feedback:** "Correto." ou "Incorreto.", com check e "Erro aqui" na linha certa, x e "Sua seleção" na linha escolhida, o tipo do erro, a explicação e a correção em formato diff. O cronômetro **para** até o jogador tocar em **Próximo desafio**.
@@ -22,13 +22,13 @@ Sons curtos são gerados por código (Web Audio), sem arquivos. Para desligar: `
 | O que mudar | Arquivo |
 |---|---|
 | Trechos de código, linha do erro, explicação, tipo, dica e correção | `www/src/dados/trechos.js` |
-| Duração, pontuação, PIN, inatividade, sons | `www/src/config.js` |
+| Duração, pontuação, trechos sorteados por nível, PIN, inatividade, sons | `www/src/config.js` |
 | Cores (inclusive realce de sintaxe), fontes e espaçamento | `../compartilhado/tokens.css`, ver `../DESIGN.md` |
 | Logo | `www/index.html` (comentário "MARCA") |
 
 **Troque o PIN antes do evento.** Ele é só uma trava contra curiosos: quem abrir o código-fonte do app consegue lê-lo.
 
-Depois de editar os trechos, rode `npm test`: ele confere se cada trecho tem de 3 a 6 linhas, se a linha do erro existe e se há 5 trechos por nível.
+Depois de editar os trechos, rode `npm test`: ele confere se cada trecho tem de 3 a 6 linhas, se a linha do erro existe, se nenhum trecho está repetido e se cada nível tem mais trechos do que uma partida sorteia (`trechosPorNivel`).
 
 > Python não usa ponto e vírgula, então o bug "pontuação esquecida" aparece como **dois-pontos faltando** no `if`. Os outros tipos pedidos estão lá: variável escrita errada, condição invertida, aspas não fechadas e índice errado, além de parêntese aberto, recuo, `=` no lugar de `==`, `range` e laço infinito.
 
@@ -42,9 +42,9 @@ www/
   src/
     main.js                   raiz de composição: cria serviços e telas
     config.js                 ajustes gerais
-    dados/trechos.js          os 15 trechos (conteúdo editável)
+    dados/trechos.js          os 36 trechos (conteúdo editável)
     dominio/                  regras puras, testadas
-      partida.js              fila, tempo, pontuação, acerto e erro
+      partida.js              sorteio da fila, tempo, pontuação, acerto e erro
       ranking.js              ordenação, posição, recorde, CSV
       apelido.js              limpeza do apelido
       sintaxe.js              divide a linha de Python para o destaque

@@ -12,6 +12,7 @@ export const CONFIG = Object.freeze({
   }),
 
   ordemNiveis: ["facil", "medio", "dificil"],
+  trechosPorNivel: 5,           // sorteados a cada partida entre os trechos de cada nível
   nomesNiveis: Object.freeze({ facil: "FÁCIL", medio: "MÉDIO", dificil: "DIFÍCIL" }),
 
   segundosFeedback: 0,          // 0 = sem avanço automático: o jogador toca em "Próximo desafio" (o relógio fica parado na explicação)

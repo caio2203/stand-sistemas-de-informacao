@@ -11,12 +11,16 @@ const CONFIG_TESTE = {
   pontuacao: { maximos: 100, minimos: 10, perdaPorSegundo: 6, penalidadeErro: 30 }
 };
 
-test("os 15 trechos reais são válidos e divididos 5 por nível", () => {
-  assert.equal(TRECHOS.length, 15);
+test("os trechos reais são válidos e cada nível tem mais trechos do que uma partida usa", () => {
   TRECHOS.forEach((trecho, i) => assert.deepEqual(validarTrecho(trecho, CONFIG.ordemNiveis), [], `trecho ${i + 1}`));
   for (const nivel of CONFIG.ordemNiveis) {
-    assert.equal(TRECHOS.filter((t) => t.nivel === nivel).length, 5, nivel);
+    assert.ok(TRECHOS.filter((t) => t.nivel === nivel).length > CONFIG.trechosPorNivel, nivel);
   }
+});
+
+test("nenhum trecho real se repete", () => {
+  const codigos = TRECHOS.map((t) => t.linhas.join("\n"));
+  assert.equal(new Set(codigos).size, codigos.length);
 });
 
 test("validarTrecho aponta linhaErrada fora do trecho e tamanho inválido", () => {
@@ -44,6 +48,19 @@ test("fila segue fácil, médio, difícil e não repete trechos", () => {
   assert.equal(new Set(fila).size, TRECHOS.length);
   const niveis = fila.map((t) => t.nivel);
   assert.deepEqual(niveis, [...niveis].sort((a, b) => CONFIG.ordemNiveis.indexOf(a) - CONFIG.ordemNiveis.indexOf(b)));
+});
+
+test("cada partida sorteia trechosPorNivel de cada nível, na ordem dos níveis", () => {
+  const fila = montarFila(TRECHOS, CONFIG.ordemNiveis, Math.random, CONFIG.trechosPorNivel);
+  const esperado = CONFIG.ordemNiveis.flatMap((nivel) => Array(CONFIG.trechosPorNivel).fill(nivel));
+  assert.deepEqual(fila.map((t) => t.nivel), esperado);
+  assert.equal(new Set(fila).size, fila.length);
+});
+
+test("o sorteio varia os trechos entre partidas", () => {
+  const filas = Array.from({ length: 20 }, () => montarFila(TRECHOS, CONFIG.ordemNiveis, Math.random, CONFIG.trechosPorNivel));
+  const usados = new Set(filas.flat());
+  assert.ok(usados.size > CONFIG.ordemNiveis.length * CONFIG.trechosPorNivel);
 });
 
 test("acerto rápido soma mais pontos que acerto lento", () => {
