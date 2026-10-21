@@ -1,8 +1,6 @@
 node_modules/
+package-lock.json
 # gerado por `npm run preparar` a partir de ../compartilhado
 www/compartilhado/
-# saídas de build do Android
-android/app/build/
-android/build/
-android/.gradle/
-android/app/src/main/assets/public/
+# gerado por `npx cap add android` (a personalização fica em android-personalizado/)
+android/
