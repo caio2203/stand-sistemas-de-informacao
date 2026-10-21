@@ -2,10 +2,14 @@
 
 O jogador vê trechos curtos de código Python, cada um com **exatamente um erro**, e toca na linha errada o mais rápido que puder. Acertos rápidos valem mais. Tem ranking Top 10 salvo no aparelho e uma área escondida para administradores.
 
+![Feedback de um desafio: linha do erro, tipo, explicação e correção](../docs/capturas/bug-5-feedback-1280.png)
+
+APK pronto: [corrida-contra-o-bug.apk](https://github.com/caio2203/stand-sistemas-de-informacao/releases/latest/download/corrida-contra-o-bug.apk) (versões anteriores em [Releases](https://github.com/caio2203/stand-sistemas-de-informacao/releases)).
+
 ## Como funciona
 
 1. **Início:** campo de apelido (sem dados pessoais) e botão **Jogar**. O apelido aceita só letras, números, espaço, `_` e `-`, com até 12 caracteres.
-2. **Rodada de 90 s** com cronômetro visível (fica vermelho nos últimos 10 s).
+2. **Rodada de 90 s** com cronômetro visível no cabeçalho e o aviso "Tempo quase esgotado." nos últimos 10 s (sem cores de semáforo).
 3. **Trechos de 3 a 6 linhas.** 36 trechos em 3 níveis (12 fáceis, 12 médios, 12 difíceis). Cada partida sorteia 5 de cada nível, em ordem aleatória, e os níveis vêm em sequência: fácil, médio, difícil. Nenhum trecho se repete na partida, e partidas seguidas recebem trechos diferentes.
 4. **Pontuação:** acerto vale 100 pontos, menos 6 por segundo pensando, com mínimo de 10. Erro desconta 30 (a pontuação nunca fica negativa). Cada trecho aceita uma resposta.
 5. **Selecionar e confirmar:** toque na linha (ou use as setas), veja "Linha 3 selecionada" na barra de status e toque em **Confirmar linha**. Esc limpa a seleção. Há uma dica opcional em cada desafio.
@@ -78,7 +82,9 @@ npm test
 
 ## Gerar o APK com Capacitor
 
-**Pré-requisitos:** Node.js 20+, [Android Studio](https://developer.android.com/studio) com o Android SDK instalado (o JDK necessário já vem junto).
+**Pré-requisitos:** Node.js 20+ e [Android Studio](https://developer.android.com/studio) com o Android SDK instalado (o JDK certo já vem junto).
+
+Sem o Android Studio, pela linha de comando: Android SDK com a variável `ANDROID_HOME` apontando para ele e **JDK 21** em `JAVA_HOME`. O Gradle 8.11 usado pelo Capacitor 7 não roda no Java 25.
 
 1. Instale as dependências (Capacitor, plataforma Android e os plugins de barra de status e de arquivos):
 
@@ -92,7 +98,7 @@ npm test
    npm run preparar
    ```
 
-3. Crie o projeto Android (só na primeira vez):
+3. Crie o projeto Android (só na primeira vez; a pasta `android/` é gerada e fica fora do git):
 
    ```bash
    npx cap add android

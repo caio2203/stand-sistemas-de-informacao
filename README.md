@@ -4,12 +4,33 @@ Dois jogos para tablets Android, feitos para o stand do curso e voltados a estud
 
 | Jogo | O que faz | Duração |
 |---|---|---|
-| [Quiz de perfil profissional](quiz-perfil-profissional/README.md) | 7 perguntas do dia a dia revelam a área da tecnologia que mais combina com a pessoa: UI/UX, Front-end, Back-end, Infraestrutura e Redes, Dados ou Segurança da Informação. | até 2 min |
-| [Corrida contra o Bug](corrida-contra-o-bug/README.md) | Trechos curtos de Python com um erro cada: quem acha a linha errada mais rápido faz mais pontos. Tem ranking Top 10 e área do administrador. | 90 s |
+| [Quiz de perfil profissional](quiz-perfil-profissional/README.md) | 7 perguntas do dia a dia revelam a área da tecnologia que mais combina com a pessoa: UI/UX, Front-end, Back-end, Infraestrutura e Redes, Dados ou Segurança da Informação. O resultado traz um gráfico de radar com o nível (A a E) de cada área. | até 2 min |
+| [Corrida contra o Bug](corrida-contra-o-bug/README.md) | Trechos curtos de Python com um erro cada: quem acha a linha errada mais rápido faz mais pontos. São 36 trechos; cada partida sorteia 15, do fácil ao difícil. Tem ranking Top 10 e área do administrador. | 90 s |
 
 Os dois funcionam **100% offline** (sem CDN; as fontes IBM Plex vão embutidas), usam só HTML, CSS e JavaScript puro, e viram APK com o [Capacitor](https://capacitorjs.com).
 
 O sistema visual (tokens de cor, tipografia, espaçamento, regras e proibições) está em [DESIGN.md](DESIGN.md), fonte única para os dois jogos.
+
+![Resultado do quiz: gráfico de radar com o nível de cada área](docs/capturas/quiz-7-resultado-1280.png)
+
+![Corrida contra o Bug: feedback de um desafio, com o tipo do erro e a correção](docs/capturas/bug-5-feedback-1280.png)
+
+Mais capturas, em tablet e celular, em [docs/capturas](docs/capturas/README.md).
+
+## Baixar os APKs
+
+Os APKs prontos ficam em [Releases](https://github.com/caio2203/stand-sistemas-de-informacao/releases). Os links abaixo sempre apontam para a versão mais recente:
+
+| Jogo | APK |
+|---|---|
+| Quiz de perfil profissional | [quiz-perfil-profissional.apk](https://github.com/caio2203/stand-sistemas-de-informacao/releases/latest/download/quiz-perfil-profissional.apk) |
+| Corrida contra o Bug | [corrida-contra-o-bug.apk](https://github.com/caio2203/stand-sistemas-de-informacao/releases/latest/download/corrida-contra-o-bug.apk) |
+
+Copie o APK para o tablet e abra o arquivo (permita "instalar apps desconhecidos"), ou use `adb install -r arquivo.apk`. São APKs de debug, suficientes para o stand.
+
+> Antes de atualizar o Corrida contra o Bug, exporte o ranking pela área do administrador. Se o Android recusar a atualização (assinatura diferente), será preciso desinstalar a versão antiga, e isso apaga o ranking.
+
+**Publicar uma versão nova:** gere os dois APKs (veja o README de cada jogo), crie uma release com a tag `vX.Y.Z` e anexe os arquivos com os mesmos nomes da tabela, para os links continuarem funcionando.
 
 ## Estrutura
 
@@ -31,10 +52,12 @@ stand-sistemas-de-informacao/
   scripts/
     sincronizar-compartilhado.mjs   copia compartilhado/ para www/ de cada jogo
   docs/
-    capturas/                   prints e GIFs dos dois jogos
+    capturas/                   prints dos dois jogos (tablet e celular)
   quiz-perfil-profissional/     projeto Capacitor do quiz
   corrida-contra-o-bug/         projeto Capacitor do Corrida contra o Bug
 ```
+
+Em cada jogo, as pastas `android/` (criada pelo `npx cap add android`), `node_modules/` e `www/compartilhado/` são geradas e ficam fora do git. A única personalização nativa, o `MainActivity.java` com o modo imersivo, fica guardada em `android-personalizado/`.
 
 ## Arquitetura
 
@@ -90,7 +113,7 @@ Depois abra `http://localhost:8080` (quiz) ou, na pasta do outro jogo, `http://l
 
 > Os jogos usam ES Modules, que o navegador não carrega abrindo o `index.html` com dois cliques (`file://`). Use sempre um servidor local, como o `npm run servir`.
 
-Para gerar o APK, veja o README de cada jogo.
+Para gerar o APK, veja o README de cada jogo, ou baixe os prontos em [Baixar os APKs](#baixar-os-apks).
 
 ## Dicas para o dia do evento
 

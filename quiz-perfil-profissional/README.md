@@ -2,6 +2,10 @@
 
 Quiz de 7 perguntas leves, do dia a dia, que mostra com qual área da tecnologia a pessoa mais se identifica: **UI/UX Design, Front-end, Back-end, Infraestrutura e Redes, Ciência de Dados ou Segurança da Informação**.
 
+![Resultado: gráfico de radar com o nível e os pontos de cada área](../docs/capturas/quiz-7-resultado-1280.png)
+
+APK pronto: [quiz-perfil-profissional.apk](https://github.com/caio2203/stand-sistemas-de-informacao/releases/latest/download/quiz-perfil-profissional.apk) (versões anteriores em [Releases](https://github.com/caio2203/stand-sistemas-de-informacao/releases)).
+
 ## Como funciona
 
 1. Tela inicial com a descrição, a escolha do tempo (15 s por questão ou sem tempo) e o botão **Iniciar**.
@@ -65,7 +69,9 @@ npm test
 
 ## Gerar o APK com Capacitor
 
-**Pré-requisitos:** Node.js 20+, [Android Studio](https://developer.android.com/studio) com o Android SDK instalado (o JDK necessário já vem junto).
+**Pré-requisitos:** Node.js 20+ e [Android Studio](https://developer.android.com/studio) com o Android SDK instalado (o JDK certo já vem junto).
+
+Sem o Android Studio, pela linha de comando: Android SDK com a variável `ANDROID_HOME` apontando para ele e **JDK 21** em `JAVA_HOME`. O Gradle 8.11 usado pelo Capacitor 7 não roda no Java 25.
 
 1. Instale as dependências (Capacitor, plataforma Android e plugin de barra de status):
 
@@ -79,7 +85,7 @@ npm test
    npm run preparar
    ```
 
-3. Crie o projeto Android (só na primeira vez):
+3. Crie o projeto Android (só na primeira vez; a pasta `android/` é gerada e fica fora do git):
 
    ```bash
    npx cap add android
